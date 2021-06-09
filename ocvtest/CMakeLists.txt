@@ -9,6 +9,8 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
+
+find_package(Sophus REQUIRED)
 # find OpenCV
 find_package(OpenCV REQUIRED)
 
@@ -30,3 +32,4 @@ add_executable(hello ${SRC_LIST})
 
 # after ADD_EXECUTABLE，为生成文件target添加库
 target_link_libraries(hello ${OpenCV_LIBS})
+target_link_libraries(hello ${Sophus_LIBRARIES} fmt)

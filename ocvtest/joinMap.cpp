@@ -13,7 +13,7 @@
 using namespace std;
 using namespace cv;
 
-int main()
+int main2()
 {
     //相机内参
     double cx = 325.5;
