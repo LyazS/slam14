@@ -10,7 +10,7 @@
 #include "triangulation.h"
 #include "myPCL.h"
 
-int main()
+int main22()
 {
     string build_dir = get_current_dir_name();
     string build_str = "build";
@@ -40,7 +40,7 @@ int main()
     cout << "t_R " << t_R << endl;
     cout << "scale = E/t_R = " << endl
          << E / t_R << endl;
-
+    
     //三角化
     vector<cv::Point3d> tri_points;
     triangulation(kp1, kp2, matches, R, t, tri_points);
@@ -78,4 +78,5 @@ int main()
     //     pcl_point.push_back(p);
     // }
     // SavePointCloud(pcl_point, "test.pcd");
+    return 0;
 }

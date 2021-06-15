@@ -7,7 +7,7 @@
 using namespace std;
 using namespace Eigen;
 
-int main()
+int mainus()
 {
     //构造李群
     //沿z轴旋转90度

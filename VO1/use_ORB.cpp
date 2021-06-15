@@ -10,15 +10,15 @@ using namespace std;
 using namespace cv;
 
 void find_feature_matches(const cv::Mat &img1, const cv::Mat &img2,
-                         vector<cv::KeyPoint> &kp1, vector<cv::KeyPoint> &kp2,
-                         vector<cv::DMatch> &matches)
+                          vector<cv::KeyPoint> &kp1, vector<cv::KeyPoint> &kp2,
+                          vector<cv::DMatch> &good_matches)
 {
     //初始化
     cv::Mat desc1, desc2;
     Ptr<ORB> orb = cv::ORB::create(
         500, 1.2f, 8, 32, 0, 2,
         ORB::HARRIS_SCORE, 31, 20);
-
+    
     //第一步：检测Oriented FAST角点位置
     orb->detect(img1, kp1);
     orb->detect(img2, kp2);
@@ -31,10 +31,11 @@ void find_feature_matches(const cv::Mat &img1, const cv::Mat &img2,
 
     //第三步：使用Hamming距离，匹配两幅图像中的BRIEF描述子
     cv::BFMatcher matcher(cv::NORM_HAMMING);
+    vector<cv::DMatch> matches;
     matcher.match(desc1, desc2, matches);
 
     //第四步：筛选匹配点对
-    double min_dist = 1000, max_dist = 0;
+    double min_dist = 10000, max_dist = 0;
     for (int i = 0; i < desc1.rows; i++)
     {
         double dist = matches[i].distance;
@@ -48,7 +49,6 @@ void find_feature_matches(const cv::Mat &img1, const cv::Mat &img2,
 
     //当描述子距离大于最小值的两倍时，则判断为误匹配
     //当然，以上纯属经验之谈，实际最小值应该设置下限值
-    vector<cv::DMatch> good_matches;
     for (int i = 0; i < desc1.rows; i++)
     {
         if (matches[i].distance <= cv::max(2 * min_dist, 30.0))
@@ -69,5 +69,4 @@ void find_feature_matches(const cv::Mat &img1, const cv::Mat &img2,
     // cv::imshow("all match", img_match);
     // cv::imshow("good match", img_goodmatch);
     // cv::waitKey(0);
-    
 }

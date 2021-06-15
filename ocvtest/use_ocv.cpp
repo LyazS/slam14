@@ -7,7 +7,7 @@
 using namespace std;
 using namespace cv;
 
-int main1()
+int mainuo()
 {
 	cout << "程序运行当前目录" << get_current_dir_name() << endl;
 	string image_path = "../testdata/useocv/1.png";

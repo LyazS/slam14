@@ -28,7 +28,7 @@ TrajectoryType ReadTrajectory(const string &path)
     return trajectory;
 }
 
-int main3()
+int mainte()
 {
     string gt_path = "../testdata/trajectory/groundtruth.txt";
     string es_path = "../testdata/trajectory/estimated.txt";
