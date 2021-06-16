@@ -24,7 +24,7 @@ int main()
         ushort d = d1.ptr<unsigned short>(int(kp1[m.queryIdx].pt.y))[int(kp1[m.queryIdx].pt.x)];
         if (d == 0) // bad depth
             continue;
-        float dd = d / 5000.0;
+        float dd = d / 1000.0;
         Point2d p1 = pixel2cam(kp1[m.queryIdx].pt, K);
         pts_3d.push_back(Point3f(p1.x * dd, p1.y * dd, dd));
         pts_2d.push_back(kp2[m.trainIdx].pt);
@@ -39,4 +39,8 @@ int main()
     cv::Rodrigues(r, R);
     cout << "R " << R << endl;
     cout << "t " << t << endl;
+
+    //以PnP方法解的解作为初始值进行优化
+    cout<<"calling bundle adjustment"<<endl;
+    bundleAdjustment ( pts_3d, pts_2d, K, R, t );
 }
