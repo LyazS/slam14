@@ -10,10 +10,9 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
 # g2o
-LIST( APPEND CMAKE_MODULE_PATH /home/install_thing/g2o_old/g2o-20170730_git/cmake_modules )
-SET( G2O_ROOT /home/install_thing/g2o_old/g2o-20170730_git )
+LIST( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules )
 find_package(G2O REQUIRED)
-
+find_package(CSparse REQUIRED)
 
 find_package(Sophus REQUIRED)
 # find OpenCV
@@ -30,6 +29,7 @@ message(STATUS "    libraries: 	${OpenCV_LIBS}")
 include_directories({OpenCV_INCLUDE_DIRS})
 include_directories("/usr/include/eigen3")
 include_directories(${G2O_INCLUDE_DIRS})
+include_directories(${CSPARSE_INCLUDE_DIR})
 include_directories("./")
 # 添加源代码文件到SRC_LIST变量中
 aux_source_directory(. SRC_LIST)
@@ -40,4 +40,10 @@ add_executable(hello ${SRC_LIST})
 # after ADD_EXECUTABLE，为生成文件target添加库
 target_link_libraries(hello ${OpenCV_LIBS})
 target_link_libraries(hello ${Sophus_LIBRARIES} fmt)
-target_link_libraries(hello ${G2O_CORE_LIBRARY} ${G2O_STUFF_LIBRARY})
+target_link_libraries(hello ${CSPARSE_LIBRARY})
+target_link_libraries(hello 
+g2o_core 
+g2o_stuff g2o_types_sba  
+g2o_types_slam3d 
+g2o_solver_csparse g2o_csparse_extension
+cholmod g2o_solver_cholmod)

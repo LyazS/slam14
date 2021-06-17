@@ -13,8 +13,11 @@ using namespace cv;
 
 #include <vector>
 #include <list>
+#include <memory>
 #include <string>
 #include <iostream>
+#include <set>
 #include <unordered_map>
+#include <map>
 using namespace std;
 #endif

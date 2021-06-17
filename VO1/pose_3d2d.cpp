@@ -7,14 +7,14 @@ void bundleAdjustment(
     Mat &R, Mat &t)
 {
     // 构建图优化，先设定g2o
-    // // //每个误差项优化变量维度为3，误差值维度为1
-    // typedef g2o::BlockSolver<g2o::BlockSolverTraits<6, 3>> Block;                                  // 每个误差项优化变量维度为3，误差值维度为1
+    // typedef g2o::BlockSolver<g2o::BlockSolverTraits<6, 3>> Block;                                  // 每个误差项优化变量维度为6，误差值维度为3
     // Block::LinearSolverType *linearSolver = new g2o::LinearSolverCSparse<Block::PoseMatrixType>(); // 线性方程求解器
     // Block *solver_ptr = new Block(linearSolver);                                                   // 矩阵块求解器
     // // 梯度下降方法，从GN, LM, DogLeg 中选
     // g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
 
     // 线性方程求解器
+    //pose 维度为6，路标维度为3
     auto linear_solver = g2o::make_unique<g2o::LinearSolverCSparse<g2o::BlockSolver_6_3::PoseMatrixType>>();
     // 矩阵块求解器
     auto block_solver = g2o::make_unique<g2o::BlockSolver_6_3>(std::move(linear_solver));

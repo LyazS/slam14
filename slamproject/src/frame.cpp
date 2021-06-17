@@ -3,7 +3,7 @@
 namespace myslam
 {
     Frame::Frame() : id_(-1), time_stamp_(-1), camera_(nullptr) {}
-    Frame::Frame(long id, double time_stamp, Sophus::SE3d T_c_w, Camera::Ptr camera, cv::Mat color, cv::Mat depth)::id_(id), time_stamp_(time_stamp), T_c_w_(T_c_w), camera_(camera), color_(color), depth_(depth) {}
+    Frame::Frame(long id, double time_stamp, Sophus::SE3d T_c_w, Camera::Ptr camera, cv::Mat color, cv::Mat depth) : id_(id), time_stamp_(time_stamp), T_c_w_(T_c_w), camera_(camera), color_(color), depth_(depth) {}
     Frame::~Frame() {}
     Frame::Ptr Frame::createFrame()
     {
@@ -12,8 +12,8 @@ namespace myslam
     }
     double Frame::findDepth(const cv::KeyPoint &kp)
     {
-        int x = cv::cvRound(kp.pt.x);
-        int y = cv::cvRound(kp.pt.y);
+        int x = cvRound(kp.pt.x);
+        int y = cvRound(kp.pt.y);
         ushort d = depth_.ptr<ushort>(y)[x];
         if (d != 0)
         {
@@ -50,7 +50,9 @@ namespace myslam
         else
         {
             Eigen::Vector2d pixel = camera_->world2pixel(pt_world, T_c_w_);
-            return pixel(0, 0) > 0 && pixel(1, 0) > 0 && pixel(0, 0) < color_.cols && pixel(1, 0) < color_.rows;
+            if (pixel(0, 0) > 0 && pixel(1, 0) > 0 && pixel(0, 0) < color_.cols && pixel(1, 0) < color_.rows)
+                return true;
+            return false;
         }
     }
 

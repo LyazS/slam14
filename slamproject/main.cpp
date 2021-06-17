@@ -3,7 +3,7 @@
 #include "myslam/frame.h"
 
 using namespace myslam;
-int main(int, char **)
+int mainhw(int, char **)
 {
     Camera::Ptr c();
     std::cout << "Hello, world!\n";

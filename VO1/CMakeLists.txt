@@ -12,7 +12,7 @@ include(CPack)
 LIST( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules )
 
 find_package(G2O REQUIRED)
-find_package( CSparse REQUIRED )
+find_package(CSparse REQUIRED)
 
 # find OpenCV
 find_package(OpenCV REQUIRED)

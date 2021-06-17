@@ -14,7 +14,7 @@ find_package(OpenCV REQUIRED)
 set(THIRD_PARTY_LIBS ${OpenCV_LIBS} ${Sophus_LIBRARIES})
 
 # 包含头文件
-include_directories({OpenCV_INCLUDE_DIRS})
+include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories("/usr/include/eigen3")
 include_directories("./include/")
 # 添加子目录，子目录下也需要CMakeLists.txt
@@ -23,6 +23,6 @@ add_subdirectory(src)
 add_subdirectory(test)
 
 
-aux_source_directory(. SRC_LIST)
-add_executable(SlamProject ${SRC_LIST})
-target_link_libraries(SlamProject ${THIRD_PARTY_LIBS} fmt)
+# aux_source_directory(. SRC_LIST)
+# add_executable(SlamProject ${SRC_LIST})
+# target_link_libraries(SlamProject ${THIRD_PARTY_LIBS} fmt)

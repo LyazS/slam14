@@ -4,6 +4,9 @@
 #include <g2o/core/base_unary_edge.h>
 #include <g2o/core/block_solver.h>
 #include <g2o/core/optimization_algorithm_levenberg.h>
+#include <g2o/solvers/csparse/linear_solver_csparse.h>
+#include <g2o/types/sba/types_six_dof_expmap.h>
+#include <g2o/core/optimization_algorithm_levenberg.h>
 #include <g2o/core/optimization_algorithm_gauss_newton.h>
 #include <g2o/core/optimization_algorithm_dogleg.h>
 #include <g2o/solvers/dense/linear_solver_dense.h>
@@ -86,11 +89,16 @@ int main()
 
     // 构建图优化，先设定g2o
     // //每个误差项优化变量维度为3，误差值维度为1
-    typedef g2o::BlockSolver<g2o::BlockSolverTraits<3, 1>> Block;                                // 每个误差项优化变量维度为3，误差值维度为1
-    Block::LinearSolverType *linearSolver = new g2o::LinearSolverDense<Block::PoseMatrixType>(); // 线性方程求解器
-    Block *solver_ptr = new Block(linearSolver);                                      // 矩阵块求解器
-    // 梯度下降方法，从GN, LM, DogLeg 中选
-    g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
+    // typedef g2o::BlockSolver<g2o::BlockSolverTraits<3, 1>> Block;                                // 每个误差项优化变量维度为3，误差值维度为1
+    // Block::LinearSolverType *linearSolver = new g2o::LinearSolverDense<Block::PoseMatrixType>(); // 线性方程求解器
+    // Block *solver_ptr = new Block(linearSolver);                                      // 矩阵块求解器
+    // // 梯度下降方法，从GN, LM, DogLeg 中选
+    // g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
+    //pose 维度为6，路标维度为3
+    auto linear_solver = g2o::make_unique<g2o::LinearSolverDense<g2o::BlockSolverTraits<3, 1>::PoseMatrixType>>();
+    // 矩阵块求解器
+    auto block_solver = g2o::make_unique<g2o::BlockSolverTraits<3, 1>>(std::move(linear_solver));
+    g2o::OptimizationAlgorithmLevenberg *solver = new g2o::OptimizationAlgorithmLevenberg(std::move(block_solver));
 
     //图模型
     g2o::SparseOptimizer optimizer;
