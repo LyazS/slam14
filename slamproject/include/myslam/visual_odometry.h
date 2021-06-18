@@ -44,7 +44,7 @@ namespace myslam
         double key_frame_min_rot;   //两关键帧之间最小的旋转
         double key_frame_min_trans; //两关键帧之间最小的平移
 
-        bool log; //是否打印过程
+        bool log=true; //是否打印过程
     public:
         VisualOdometry();
         ~VisualOdometry();

@@ -179,7 +179,7 @@ namespace myslam
         }
         Sophus::Vector6d d = T_c_r_estimated_.log();
         //如果平移距离过大，则可能匹配变差，由此也认为是差的帧
-        if (d.norm() < 5.0)
+        if (d.norm() > 5.0)
         {
             if (log)
             {
