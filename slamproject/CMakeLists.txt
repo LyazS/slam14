@@ -8,6 +8,11 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
+# g2o
+LIST( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules )
+
+find_package(G2O REQUIRED)
+find_package(CSparse REQUIRED)
 
 find_package(Sophus REQUIRED)
 find_package(OpenCV REQUIRED)
@@ -17,6 +22,9 @@ set(THIRD_PARTY_LIBS ${OpenCV_LIBS} ${Sophus_LIBRARIES})
 include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories("/usr/include/eigen3")
 include_directories("./include/")
+include_directories(${G2O_INCLUDE_DIRS})
+include_directories(${CSPARSE_INCLUDE_DIR})
+
 # 添加子目录，子目录下也需要CMakeLists.txt
 # 这样子可以编译生成一个库文件
 add_subdirectory(src)
