@@ -10,12 +10,13 @@ namespace myslam
         typedef std::shared_ptr<Frame> Ptr;
         unsigned long id_;      //帧id
         double time_stamp_;     //帧时刻
-        Sophus::SE3d T_c_w_;     //从世界到相机的坐标转换
+        Sophus::SE3d T_c_w_;    //从世界到相机的坐标转换
         Camera::Ptr camera_;    //相机模型
         cv::Mat color_, depth_; //rgb与深度图
 
         Frame();
-        Frame(long id, double time_stamp = 0, Sophus::SE3d T_c_w = Sophus::SE3d(), Camera::Ptr camera = nullptr, cv::Mat color = cv::Mat(), cv::Mat depth = cv::Mat());
+        Frame(long id, double time_stamp = 0, Sophus::SE3d T_c_w = Sophus::SE3d(),
+              Camera::Ptr camera = nullptr, cv::Mat color = cv::Mat(), cv::Mat depth = cv::Mat());
         ~Frame();
 
         //工厂函数，创建帧
